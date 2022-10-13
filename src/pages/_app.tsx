@@ -1,12 +1,14 @@
 import '../lib/tailwind.css'
 import { MantineProvider } from '@mantine/core'
 
-import type { AppProps } from 'next/app'
+import type { AppPropsWithLayout } from 'next/app'
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps }: AppPropsWithLayout) {
+  const getLayout = Component.getLayout ?? ((page) => page)
+
   return (
     <MantineProvider withGlobalStyles withNormalizeCSS>
-      <Component {...pageProps} />
+      {getLayout(<Component {...pageProps} />)}
     </MantineProvider>
   )
 }

@@ -1,11 +1,12 @@
-import type { NextPage } from 'next'
+import { Index } from 'src/pages-component'
+import { HomeLayout } from 'src/pages-layout'
 
-const Home: NextPage = () => {
-  return (
-    <div>
-      <h1 className="text-3xl font-bold text-blue-300">Hello World</h1>
-    </div>
-  )
+import type { NextPageWithLayout } from 'next'
+
+const Home: NextPageWithLayout = () => {
+  return <Index />
 }
+
+Home.getLayout = (page) => <HomeLayout title="Null Homepage">{page}</HomeLayout>
 
 export default Home
