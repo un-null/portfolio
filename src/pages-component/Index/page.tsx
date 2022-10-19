@@ -1,14 +1,13 @@
 import { Loader } from '@mantine/core'
 import { FC, Suspense } from 'react'
 
-import { Db } from 'src/component'
+import { Works } from './Works'
 
 export const Index: FC = () => {
   return (
     <div>
-      <h1>Index</h1>
       <Suspense fallback={<Loader />}>
-        <Db />
+        <Works />
       </Suspense>
     </div>
   )
