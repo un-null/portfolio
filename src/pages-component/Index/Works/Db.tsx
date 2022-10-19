@@ -28,7 +28,6 @@ export const Db: FC<Props> = ({ obj }) => {
 
   return (
     <div className="mx-auto mt-4 w-full max-w-2xl">
-      <p>Db Component</p>
       <Table highlightOnHover withColumnBorders mt={40}>
         <thead>
           <tr>

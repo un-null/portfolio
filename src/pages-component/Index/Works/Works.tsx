@@ -1,4 +1,6 @@
 import { FC } from 'react'
+import { Tabs } from '@mantine/core'
+import { IconPhoto, IconTable } from '@tabler/icons'
 
 import { useQueryWorks } from 'src/lib/works'
 
@@ -33,10 +35,26 @@ export const Works: FC = () => {
   })
 
   return (
-    <div>
-      <h1 className="text-center">Works</h1>
-      {/* <Db obj={obj} /> */}
-      <Gallery obj={obj} />
+    <div className="mx-auto h-auto max-w-3xl">
+      <h2 className="text-center">Works</h2>
+      <Tabs defaultValue="Table">
+        <Tabs.List>
+          <Tabs.Tab value="Table" icon={<IconTable size={14} />}>
+            Table
+          </Tabs.Tab>
+          <Tabs.Tab value="Gallery" icon={<IconPhoto size={14} />}>
+            Gallery
+          </Tabs.Tab>
+        </Tabs.List>
+
+        <Tabs.Panel value="Table" pt="xs">
+          <Db obj={obj} />
+        </Tabs.Panel>
+
+        <Tabs.Panel value="Gallery" pt="xs">
+          <Gallery obj={obj} />
+        </Tabs.Panel>
+      </Tabs>
     </div>
   )
 }
