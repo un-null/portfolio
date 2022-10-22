@@ -5,7 +5,7 @@ type Props = {
   obj:
     | {
         id: any
-        urls: any
+        url: any
         lang: any
         date: any
         name: any
@@ -17,8 +17,16 @@ type Props = {
 export const Db: FC<Props> = ({ obj }) => {
   const rows = obj?.map((content) => (
     <tr key={content.id}>
-      <td>
-        <a href={content.urls}>{content.name}</a>
+      <td className="flex justify-between px-2">
+        <p>{content.name}</p>
+        <a
+          href={content.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="cursor-pointer border px-2 py-px shadow-sm hover:bg-gray-100"
+        >
+          open
+        </a>
       </td>
 
       <td>{content.date['start']}</td>
@@ -27,8 +35,8 @@ export const Db: FC<Props> = ({ obj }) => {
   ))
 
   return (
-    <div className="mx-auto mt-4 w-full max-w-2xl">
-      <Table highlightOnHover withColumnBorders mt={40}>
+    <div className="mx-auto w-full max-w-3xl">
+      <Table withColumnBorders mt={16} fontSize="xs">
         <thead>
           <tr>
             <th>Project Title</th>

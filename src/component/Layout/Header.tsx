@@ -6,7 +6,7 @@ import { IconMoon, IconSun, IconPlanet } from '@tabler/icons'
 export const Header: FC = () => {
   return (
     <header className="sticky top-0 z-50 grid h-14 w-full place-items-center bg-white px-6">
-      <div className="flex h-full w-full max-w-screen-xl items-center justify-between">
+      <div className="flex h-full w-full max-w-screen-lg items-center justify-between">
         <Link href="/" passHref>
           <Anchor
             component="a"

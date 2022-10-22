@@ -12,7 +12,7 @@ export const Works: FC = () => {
 
   const obj = data?.map((content: any, index) => {
     const id = content.id
-    const urls = content.url
+    const url = content.url
     const lang = content.properties['Languages']['multi_select'].map(
       (lang: any) => lang.name
     )
@@ -26,7 +26,7 @@ export const Works: FC = () => {
 
     return {
       id,
-      urls,
+      url,
       lang,
       date,
       name,
@@ -36,8 +36,8 @@ export const Works: FC = () => {
 
   return (
     <div className="mx-auto h-auto max-w-3xl">
-      <h2 className="text-center">Works</h2>
-      <Tabs defaultValue="Table">
+      <h2 className="mb-6 text-left text-2xl">Works</h2>
+      <Tabs defaultValue="Table" color="grape">
         <Tabs.List>
           <Tabs.Tab value="Table" icon={<IconTable size={14} />}>
             Table
@@ -47,11 +47,11 @@ export const Works: FC = () => {
           </Tabs.Tab>
         </Tabs.List>
 
-        <Tabs.Panel value="Table" pt="xs">
+        <Tabs.Panel value="Table">
           <Db obj={obj} />
         </Tabs.Panel>
 
-        <Tabs.Panel value="Gallery" pt="xs">
+        <Tabs.Panel value="Gallery">
           <Gallery obj={obj} />
         </Tabs.Panel>
       </Tabs>

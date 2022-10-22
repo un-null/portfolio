@@ -5,7 +5,7 @@ import { Works } from './Works'
 
 export const Index: FC = () => {
   return (
-    <div>
+    <div className="h-auto w-full px-4">
       <Suspense fallback={<Loader />}>
         <Works />
       </Suspense>
