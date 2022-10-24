@@ -1,6 +1,14 @@
 import { FC } from 'react'
 import { Tabs } from '@mantine/core'
-import { IconPhoto, IconTable } from '@tabler/icons'
+import { useMediaQuery } from '@mantine/hooks'
+import {
+  IconBrandMantine,
+  IconBrandNextjs,
+  IconBrandNotion,
+  IconBrandTailwind,
+  IconPhoto,
+  IconTable,
+} from '@tabler/icons'
 
 import { useQueryWorks } from 'src/lib/works'
 
@@ -10,27 +18,44 @@ import { Gallery } from './Gallery'
 export const Works: FC = () => {
   const { data } = useQueryWorks()
 
+  const xs = useMediaQuery('(min-width: 576px)')
+
   const obj = data?.map((content: any, index) => {
     const id = content.id
-    const url = content.url
+    const page_url = content.url
     const lang = content.properties['Languages']['multi_select'].map(
       (lang: any) => lang.name
     )
-    const date = content.properties['Date']['date']
+    const date = content.properties['Date']['date']['start']
     const name = content.properties['Name']['title'].map(
       (c: any) => c.plain_text
     )
-    const image = data?.map((content: any) => content.cover['external']['url'])[
-      index
-    ]
+    const image_url = data?.map(
+      (content: any) => content.cover['external']['url']
+    )[index]
+
+    const langIcon = lang.map((c: any, i: any) => {
+      switch (c) {
+        case 'Next.js':
+          return <IconBrandNextjs size={xs ? 24 : 16} key={i} />
+        case 'Notion API':
+          return <IconBrandNotion size={xs ? 24 : 16} key={i} />
+        case 'Tailwind CSS':
+          return <IconBrandTailwind size={xs ? 24 : 16} key={i} />
+        case 'Mantine':
+          return <IconBrandMantine size={xs ? 24 : 16} key={i} />
+        default:
+          return c
+      }
+    })
 
     return {
       id,
-      url,
-      lang,
+      page_url,
+      langIcon,
       date,
       name,
-      image,
+      image_url,
     }
   })
 
@@ -58,3 +83,5 @@ export const Works: FC = () => {
     </div>
   )
 }
+
+// DatabasePropertyConfigResponse

@@ -1,15 +1,17 @@
 import { Table as MantineTable } from '@mantine/core'
 import { FC } from 'react'
+import dayjs from 'dayjs'
+import { IconLink } from '@tabler/icons'
 
 type Props = {
   obj:
     | {
         id: any
-        url: any
-        lang: any
+        page_url: any
+        langIcon: any
         date: any
         name: any
-        image: any
+        image_url: any
       }[]
     | undefined
 }
@@ -17,20 +19,26 @@ type Props = {
 export const Table: FC<Props> = ({ obj }) => {
   const rows = obj?.map((content) => (
     <tr key={content.id}>
-      <td className="flex justify-between px-2">
+      <td className="flex items-center justify-between px-2">
         <p>{content.name}</p>
         <a
-          href={content.url}
+          href={content.page_url}
           target="_blank"
           rel="noopener noreferrer"
-          className="cursor-pointer border px-2 py-px shadow-sm hover:bg-gray-100"
+          className="cursor-pointer border px-2 py-px shadow-sm hover:bg-gray-100 hover:text-[#1A1B1E]"
         >
-          open
+          <IconLink size={12} />
         </a>
       </td>
 
-      <td>{content.date['start']}</td>
-      <td>{content.lang}</td>
+      <td>
+        <time>{dayjs(content.date).format('YYYY.MM.DD')}</time>
+      </td>
+      <td>
+        <div className="flex items-center justify-start space-x-1">
+          {content.langIcon}
+        </div>
+      </td>
     </tr>
   ))
 
