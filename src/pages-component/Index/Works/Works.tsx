@@ -35,7 +35,7 @@ export const Works: FC = () => {
   })
 
   return (
-    <div className="mx-auto h-auto max-w-3xl">
+    <div className="mx-auto mt-10 h-auto max-w-3xl">
       <h2 className="mb-6 text-left text-2xl">Works</h2>
       <Tabs defaultValue="Table" color="grape">
         <Tabs.List>
