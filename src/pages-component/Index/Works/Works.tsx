@@ -4,7 +4,7 @@ import { IconPhoto, IconTable } from '@tabler/icons'
 
 import { useQueryWorks } from 'src/lib/works'
 
-import { Db } from './Db'
+import { Table } from './Table'
 import { Gallery } from './Gallery'
 
 export const Works: FC = () => {
@@ -48,7 +48,7 @@ export const Works: FC = () => {
         </Tabs.List>
 
         <Tabs.Panel value="Table">
-          <Db obj={obj} />
+          <Table obj={obj} />
         </Tabs.Panel>
 
         <Tabs.Panel value="Gallery">

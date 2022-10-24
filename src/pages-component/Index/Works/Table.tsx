@@ -1,4 +1,4 @@
-import { Table } from '@mantine/core'
+import { Table as MantineTable } from '@mantine/core'
 import { FC } from 'react'
 
 type Props = {
@@ -14,7 +14,7 @@ type Props = {
     | undefined
 }
 
-export const Db: FC<Props> = ({ obj }) => {
+export const Table: FC<Props> = ({ obj }) => {
   const rows = obj?.map((content) => (
     <tr key={content.id}>
       <td className="flex justify-between px-2">
@@ -36,7 +36,7 @@ export const Db: FC<Props> = ({ obj }) => {
 
   return (
     <div className="mx-auto w-full max-w-3xl">
-      <Table withColumnBorders mt={16} fontSize="xs">
+      <MantineTable withColumnBorders mt={16} fontSize="xs">
         <thead>
           <tr>
             <th>Project Title</th>
@@ -45,7 +45,7 @@ export const Db: FC<Props> = ({ obj }) => {
           </tr>
         </thead>
         <tbody>{rows}</tbody>
-      </Table>
+      </MantineTable>
     </div>
   )
 }
