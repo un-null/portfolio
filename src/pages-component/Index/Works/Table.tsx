@@ -1,59 +1,68 @@
-import { Table as MantineTable } from '@mantine/core'
 import { FC } from 'react'
-import dayjs from 'dayjs'
 import { IconLink } from '@tabler/icons'
+import { DataTable } from 'mantine-datatable'
+import { useMediaQuery } from '@mantine/hooks'
 
 type Props = {
   obj:
     | {
         id: any
         page_url: any
-        langIcon: any
+        langages: any
         date: any
         name: any
         image_url: any
       }[]
     | undefined
+  showIcon?: boolean
 }
 
 export const Table: FC<Props> = ({ obj }) => {
-  const rows = obj?.map((content) => (
-    <tr key={content.id}>
-      <td className="flex items-center justify-between px-2">
-        <p>{content.name}</p>
-        <a
-          href={content.page_url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="cursor-pointer border px-2 py-px shadow-sm hover:bg-gray-100 hover:text-[#1A1B1E]"
-        >
-          <IconLink size={12} />
-        </a>
-      </td>
-
-      <td>
-        <time>{dayjs(content.date).format('YYYY.MM.DD')}</time>
-      </td>
-      <td>
-        <div className="flex items-center justify-start space-x-1">
-          {content.langIcon}
-        </div>
-      </td>
-    </tr>
-  ))
+  const xs = useMediaQuery('(min-width: 576px)')
 
   return (
     <div className="mx-auto w-full max-w-3xl">
-      <MantineTable withColumnBorders mt={16} fontSize="xs">
-        <thead>
-          <tr>
-            <th>Project Title</th>
-            <th>Date</th>
-            <th>Languages</th>
-          </tr>
-        </thead>
-        <tbody>{rows}</tbody>
-      </MantineTable>
+      <DataTable
+        withColumnBorders
+        columns={[
+          {
+            accessor: 'name',
+            cellsClassName: '1fr',
+            ellipsis: true,
+            render: ({ name, page_url }) => (
+              <div className="px-2">
+                {xs ? (
+                  <div className="flex items-center justify-between">
+                    <p>{name}</p>
+                    <a
+                      href={page_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={
+                        xs
+                          ? 'cursor-pointer border px-2 py-px shadow-sm hover:bg-gray-100 hover:text-[#1A1B1E]'
+                          : 'hidden'
+                      }
+                    >
+                      <IconLink size={12} />
+                    </a>
+                  </div>
+                ) : (
+                  <a href={page_url} target="_blank" rel="noopener noreferrer">
+                    {name}
+                  </a>
+                )}
+              </div>
+            ),
+          },
+          { accessor: 'date', width: 100 },
+          { accessor: 'langages', cellsClassName: '1fr flex space-x-2' },
+        ]}
+        records={obj}
+        // rowExpansion={{
+        //   content: ({ record }) => <p className="pl-5">{record.name}</p>,
+        // }}
+      />
     </div>
   )
 }

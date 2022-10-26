@@ -8,7 +8,7 @@ type Props = {
     | {
         id: any
         page_url: any
-        langIcon: any
+        langages: any
         date: any
         name: any
         image_url: any
@@ -17,7 +17,7 @@ type Props = {
 }
 export const Gallery: FC<Props> = ({ obj }) => {
   return (
-    <div className="mt-4 w-fit max-w-3xl">
+    <div className="w-fit max-w-3xl">
       <div className="grid h-auto w-full grid-cols-2 gap-4 sm:grid-cols-3">
         {obj?.map((content) => {
           return (
@@ -38,9 +38,6 @@ export const Gallery: FC<Props> = ({ obj }) => {
                 <div>
                   <p className="text-sm">{content.name}</p>
                 </div>
-                {/* <div className="flex items-center justify-start space-x-1">
-                  {content.langIcon}
-                </div> */}
               </Card>
             </Link>
           )

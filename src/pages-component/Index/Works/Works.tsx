@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { Tabs } from '@mantine/core'
+import { Space, Tabs } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
 import {
   IconBrandMantine,
@@ -9,6 +9,7 @@ import {
   IconPhoto,
   IconTable,
 } from '@tabler/icons'
+import dayjs from 'dayjs'
 
 import { useQueryWorks } from 'src/lib/works'
 
@@ -26,15 +27,17 @@ export const Works: FC = () => {
     const lang = content.properties['Languages']['multi_select'].map(
       (lang: any) => lang.name
     )
-    const date = content.properties['Date']['date']['start']
-    const name = content.properties['Name']['title'].map(
-      (c: any) => c.plain_text
+    const date = dayjs(content.properties['Date']['date']['start']).format(
+      'YYYY.MM.DD'
     )
-    const image_url = data?.map(
+    const name = content.properties['Name']['title'].map(
+      (c: any, i: any) => c.plain_text
+    )
+    const image_url: any = data?.map(
       (content: any) => content.cover['external']['url']
     )[index]
 
-    const langIcon = lang.map((c: any, i: any) => {
+    const langages = lang.map((c: any, i: any) => {
       switch (c) {
         case 'Next.js':
           return <IconBrandNextjs size={xs ? 24 : 16} key={i} />
@@ -52,7 +55,7 @@ export const Works: FC = () => {
     return {
       id,
       page_url,
-      langIcon,
+      langages,
       date,
       name,
       image_url,
@@ -73,10 +76,12 @@ export const Works: FC = () => {
         </Tabs.List>
 
         <Tabs.Panel value="Table">
-          <Table obj={obj} />
+          <Space mt={20} />
+          <Table obj={obj} showIcon />
         </Tabs.Panel>
 
         <Tabs.Panel value="Gallery">
+          <Space mt={20} />
           <Gallery obj={obj} />
         </Tabs.Panel>
       </Tabs>
