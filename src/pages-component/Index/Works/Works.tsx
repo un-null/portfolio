@@ -12,6 +12,7 @@ import {
 import dayjs from 'dayjs'
 
 import { useQueryWorks } from 'src/lib/works'
+import { PageProps, PageType } from 'src/lib/works/types'
 
 import { Table } from './Table'
 import { Gallery } from './Gallery'
@@ -21,24 +22,24 @@ export const Works: FC = () => {
 
   const xs = useMediaQuery('(min-width: 576px)')
 
-  const obj = data?.map((content: any, index) => {
+  if (!data) return null
+
+  const records = data.map((content: PageType, index) => {
     const id = content.id
     const page_url = content.url
-    const lang = content.properties['Languages']['multi_select'].map(
-      (lang: any) => lang.name
+    const langs = content.properties['Languages']['multi_select'].map(
+      (lang) => lang.name
     )
     const date = dayjs(content.properties['Date']['date']['start']).format(
       'YYYY.MM.DD'
     )
-    const name = content.properties['Name']['title'].map(
-      (c: any, i: any) => c.plain_text
-    )
-    const image_url: any = data?.map(
-      (content: any) => content.cover['external']['url']
-    )[index]
+    const name = content.properties['Name']['title'].map((c) => c.plain_text)
+    const image_url = data?.map((content) => content.cover['external']['url'])[
+      index
+    ]
 
-    const langages = lang.map((c: any, i: any) => {
-      switch (c) {
+    const langages = langs.map((lang, i) => {
+      switch (lang) {
         case 'Next.js':
           return <IconBrandNextjs size={xs ? 24 : 16} key={i} />
         case 'Notion API':
@@ -48,7 +49,7 @@ export const Works: FC = () => {
         case 'Mantine':
           return <IconBrandMantine size={xs ? 24 : 16} key={i} />
         default:
-          return c
+          return lang
       }
     })
 
@@ -77,12 +78,12 @@ export const Works: FC = () => {
 
         <Tabs.Panel value="Table">
           <Space mt={20} />
-          <Table obj={obj} showIcon />
+          <Table records={records} />
         </Tabs.Panel>
 
         <Tabs.Panel value="Gallery">
           <Space mt={20} />
-          <Gallery obj={obj} />
+          <Gallery records={records} />
         </Tabs.Panel>
       </Tabs>
     </div>

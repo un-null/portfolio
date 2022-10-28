@@ -3,23 +3,16 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { FC } from 'react'
 
+import { PageProps } from 'src/lib/works/types'
+
 type Props = {
-  obj:
-    | {
-        id: any
-        page_url: any
-        langages: any
-        date: any
-        name: any
-        image_url: any
-      }[]
-    | undefined
+  records: PageProps[]
 }
-export const Gallery: FC<Props> = ({ obj }) => {
+export const Gallery: FC<Props> = ({ records }) => {
   return (
     <div className="w-fit max-w-3xl">
       <div className="grid h-auto w-full grid-cols-2 gap-4 sm:grid-cols-3">
-        {obj?.map((content) => {
+        {records?.map((content) => {
           return (
             <Link key={content.id} href={content.page_url}>
               <Card

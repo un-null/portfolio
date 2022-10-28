@@ -3,21 +3,13 @@ import { IconLink } from '@tabler/icons'
 import { DataTable } from 'mantine-datatable'
 import { useMediaQuery } from '@mantine/hooks'
 
+import { PageProps } from 'src/lib/works/types'
+
 type Props = {
-  obj:
-    | {
-        id: any
-        page_url: any
-        langages: any
-        date: any
-        name: any
-        image_url: any
-      }[]
-    | undefined
-  showIcon?: boolean
+  records: PageProps[]
 }
 
-export const Table: FC<Props> = ({ obj }) => {
+export const Table: FC<Props> = ({ records }) => {
   const xs = useMediaQuery('(min-width: 576px)')
 
   return (
@@ -58,7 +50,7 @@ export const Table: FC<Props> = ({ obj }) => {
           { accessor: 'date', width: 100 },
           { accessor: 'langages', cellsClassName: '1fr flex space-x-2' },
         ]}
-        records={obj}
+        records={records}
         // rowExpansion={{
         //   content: ({ record }) => <p className="pl-5">{record.name}</p>,
         // }}
