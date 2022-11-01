@@ -22,7 +22,7 @@ export const HomeLayout: FC<LayoutProps> = ({
       </Head>
 
       <Header />
-      <main>{children}</main>
+      <main className="mx-auto w-full max-w-screen-lg">{children}</main>
       <Footer />
     </div>
   )

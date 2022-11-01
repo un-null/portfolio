@@ -12,7 +12,7 @@ import {
 import dayjs from 'dayjs'
 
 import { useQueryWorks } from 'src/lib/works'
-import { PageProps, PageType } from 'src/lib/works/types'
+import { PageType } from 'src/lib/works/types'
 
 import { Table } from './Table'
 import { Gallery } from './Gallery'
@@ -64,8 +64,7 @@ export const Works: FC = () => {
   })
 
   return (
-    <div className="mx-auto mt-10 h-auto max-w-3xl">
-      <h2 className="mb-6 text-left text-2xl">Works</h2>
+    <div className="mx-auto mt-5 h-auto max-w-3xl">
       <Tabs defaultValue="Table" color="grape">
         <Tabs.List>
           <Tabs.Tab value="Table" icon={<IconTable size={14} />}>
