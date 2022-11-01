@@ -38,10 +38,10 @@ export const ContactPage: FC = () => {
           email: values.email,
           message: values.message,
         }),
-      }).then((value) => {
-        if (value.ok) {
+      }).then((res) => {
+        if (res.status === 200) {
           setSuccess(true)
-          console.log(value)
+          console.log(res)
         } else {
           throw new Error('エラーが発生しました')
         }
