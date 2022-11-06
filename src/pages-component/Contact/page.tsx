@@ -1,6 +1,8 @@
 import { Button, Textarea, TextInput } from '@mantine/core'
 import { FC, useState } from 'react'
 import { useForm } from '@mantine/form'
+import { showNotification } from '@mantine/notifications'
+import { IconCheck, IconX } from '@tabler/icons'
 
 type Form = {
   name: string
@@ -19,10 +21,12 @@ export const ContactPage: FC = () => {
     },
 
     validate: {
-      name: (value) => (value ? null : '名前を入力して下さい'),
+      name: (value) => (value ? null : 'Please enter your name'),
       email: (value) =>
-        /^\S+@\S+$/.test(value) ? null : '正しいメールアドレスを入力して下さい',
-      message: (value) => (value ? null : 'メッセージを入力して下さい'),
+        /^\S+@\S+$/.test(value)
+          ? null
+          : 'Please enter your correct email address',
+      message: (value) => (value ? null : 'Please enter your message'),
     },
   })
 
@@ -39,15 +43,29 @@ export const ContactPage: FC = () => {
           message: values.message,
         }),
       }).then((res) => {
-        if (res.status === 200) {
+        if (res.ok) {
           setSuccess(true)
-          console.log(res)
+          showNotification({
+            title: 'Success!',
+            message: 'Message to the dark side of the moon',
+            color: 'grape.7',
+            icon: <IconCheck />,
+            classNames: {
+              root: 'before:',
+            },
+          })
         } else {
           throw new Error('エラーが発生しました')
         }
       })
     } catch (err) {
       console.log(err)
+      showNotification({
+        title: 'Error...',
+        message: 'Failed to contact',
+        color: 'red',
+        icon: <IconX />,
+      })
     }
   }
 
@@ -90,12 +108,23 @@ export const ContactPage: FC = () => {
             {...form.getInputProps('message')}
           />
 
-          <Button type="submit" className="w-[250px]">
+          <Button
+            type="submit"
+            className="w-[200px]"
+            color="grape.7"
+            disabled={
+              form.values.name === '' ||
+              form.values.email === '' ||
+              form.values.message === ''
+            }
+          >
             Send
           </Button>
         </form>
       ) : (
-        <h2>お問合せが完了しました</h2>
+        <h2 className="mt-6">
+          Your message has been sent successfully. Thanks!
+        </h2>
       )}
     </div>
   )

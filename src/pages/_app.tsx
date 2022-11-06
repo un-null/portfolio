@@ -1,5 +1,6 @@
 import '../lib/tailwind.css'
 import { MantineProvider } from '@mantine/core'
+import { NotificationsProvider } from '@mantine/notifications'
 
 import type { AppPropsWithLayout } from 'next/app'
 
@@ -8,7 +9,9 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 
   return (
     <MantineProvider withGlobalStyles withNormalizeCSS>
-      {getLayout(<Component {...pageProps} />)}
+      <NotificationsProvider>
+        {getLayout(<Component {...pageProps} />)}
+      </NotificationsProvider>
     </MantineProvider>
   )
 }

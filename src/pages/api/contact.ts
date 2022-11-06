@@ -44,7 +44,7 @@ const contact = async (req: NextApiRequest, res: NextApiResponse) => {
     })
     res.status(200).json({ message: 'Success' })
   } catch (error) {
-    res.status(500).json({ message: 'Error occur' })
+    res.status(500).json({ message: 'Error' })
   }
 }
 
