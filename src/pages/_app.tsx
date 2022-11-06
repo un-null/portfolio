@@ -5,6 +5,7 @@ import {
   ColorSchemeProvider,
   MantineProvider,
 } from '@mantine/core'
+import { NotificationsProvider } from '@mantine/notifications'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { useState } from 'react'
 
@@ -64,7 +65,9 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
             },
           }}
         >
-          {getLayout(<Component {...pageProps} />)}
+          <NotificationsProvider>
+            {getLayout(<Component {...pageProps} />)}
+          </NotificationsProvider>
         </MantineProvider>
       </ColorSchemeProvider>
     </QueryClientProvider>
