@@ -5,7 +5,9 @@ import { PageType } from './types'
 
 export const useQueryWorks = () => {
   const { data, error } = useQuery<PageType[], Error>(['works'], () =>
-    fetch('http://localhost:3000/api/works').then((res) => res.json())
+    fetch(process.env.NEXT_PUBLIC_HOSTNAME + '/api/works').then((res) =>
+      res.json()
+    )
   )
   return { data, error }
 }
