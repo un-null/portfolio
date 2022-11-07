@@ -6,13 +6,21 @@ export type PageProps = {
   langages: ReactNode[]
   date: string
   name: string[]
-  image_url: string
+  cover: string
 }
 
 export type PropertyType = {
   Name: { title: [{ plain_text: string }] }
   Date: { date: { start: string } }
-  Languages: { multi_select: [{ id: string; name: string; color: string }] }
+  Languages: {
+    multi_select: [
+      {
+        id: string
+        name: 'Next.js' | 'Notion API' | 'Tailwind CSS' | 'Mantine'
+        color: string
+      }
+    ]
+  }
 }
 
 export type PageType = {

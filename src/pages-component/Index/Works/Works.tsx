@@ -18,10 +18,11 @@ import { Table } from './Table'
 import { Gallery } from './Gallery'
 
 export const Works: FC = () => {
-  const { data } = useQueryWorks()
+  const { data, error } = useQueryWorks()
 
   const xs = useMediaQuery('(min-width: 576px)')
 
+  if (error) throw new Error(error.message)
   if (!data) return null
 
   const records = data.map((content: PageType, index) => {
@@ -34,7 +35,7 @@ export const Works: FC = () => {
       'YYYY.MM.DD'
     )
     const name = content.properties['Name']['title'].map((c) => c.plain_text)
-    const image_url = data?.map((content) => content.cover['external']['url'])[
+    const cover = data?.map((content) => content.cover['external']['url'])[
       index
     ]
 
@@ -59,7 +60,7 @@ export const Works: FC = () => {
       langages,
       date,
       name,
-      image_url,
+      cover,
     }
   })
 

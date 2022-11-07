@@ -50,9 +50,6 @@ export const Table: FC<Props> = ({ records }) => {
         { accessor: 'langages', cellsClassName: '1fr flex space-x-2' },
       ]}
       records={records}
-      // rowExpansion={{
-      //   content: ({ record }) => <p className="pl-5">{record.name}</p>,
-      // }}
     />
   )
 }

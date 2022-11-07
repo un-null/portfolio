@@ -20,7 +20,7 @@ export const Gallery: FC<Props> = ({ records }) => {
             >
               <Card.Section>
                 <Image
-                  src={content.image_url}
+                  src={content.cover}
                   alt=""
                   width={400}
                   height={300}
