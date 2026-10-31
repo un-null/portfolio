@@ -1,8 +1,5 @@
 import { Client } from "@notionhq/client";
-import {
-  BlockObjectResponse,
-  QueryDatabaseResponse,
-} from "@notionhq/client/build/src/api-endpoints";
+import { BlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 
 import { SelectColor } from "@/types/notion";
 
@@ -43,7 +40,9 @@ export const getAllWorks = async () => {
           ? d.properties["Languages"].multi_select
           : [];
       return { id, public_url, title, date, github_url, langs };
-    } else [];
+    } else {
+      return undefined;
+    }
   });
 
   return {
@@ -144,7 +143,9 @@ export const getPublishedProject = async () => {
           : {};
 
       return { id, title, status, label };
-    } else [];
+    } else {
+      return undefined;
+    }
   });
 
   const filterd_works = works.results.map((d) => {
@@ -170,7 +171,9 @@ export const getPublishedProject = async () => {
           : {};
 
       return { id, title, status, label };
-    } else [];
+    } else {
+      return undefined;
+    }
   });
 
   const result = [...filterd_home, ...filterd_works];

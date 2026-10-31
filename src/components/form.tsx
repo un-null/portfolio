@@ -43,7 +43,7 @@ export default function ContactForm() {
           message: data.message,
         }),
       }).then((res) => console.log(res));
-    } catch (error) {
+    } catch {
       throw new Error("");
     }
   };
@@ -56,7 +56,7 @@ export default function ContactForm() {
             Your message has been received 🎉
             <br />
             <Balancer>
-              We're grateful for your contact and will respond promptly!
+              We&apos;re grateful for your contact and will respond promptly!
             </Balancer>
           </p>
           <Link
