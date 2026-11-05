@@ -59,10 +59,7 @@ export default function ContactForm() {
               We&apos;re grateful for your contact and will respond promptly!
             </Balancer>
           </p>
-          <Link
-            href="/"
-            className="flex flex-col hover:text-[#EEEEEE]"
-          >
+          <Link href="/" className="flex flex-col hover:text-[#EEEEEE]">
             <div className="mt-10 grid place-items-center">
               <Icon type="Home" size={40} />
             </div>
@@ -81,10 +78,12 @@ export default function ContactForm() {
               id="name"
               placeholder="your name"
               {...register("name")}
-              className="bg-[#232323] mt-1 w-full rounded p-2 text-sm accent-[#191919] outline-none placeholder:text-sm"
+              className="mt-1 w-full rounded bg-[#232323] p-2 text-sm accent-[#191919] outline-none placeholder:text-sm"
             />
             {errors.name && (
-              <span className="text-sm text-[#EC5D5E]">{errors.name.message}</span>
+              <span className="text-sm text-[#EC5D5E]">
+                {errors.name.message}
+              </span>
             )}
           </label>
 
@@ -95,7 +94,7 @@ export default function ContactForm() {
               id="email"
               placeholder="your email"
               {...register("email")}
-              className="bg-[#232323] mt-1 w-full rounded p-2 text-sm accent-[#191919] outline-none placeholder:text-sm"
+              className="mt-1 w-full rounded bg-[#232323] p-2 text-sm accent-[#191919] outline-none placeholder:text-sm"
             />
             {errors.email && (
               <span className="text-sm text-[#EC5D5E]">
@@ -111,7 +110,7 @@ export default function ContactForm() {
               placeholder="your message"
               rows={4}
               {...register("message")}
-              className="bg-[#232323] max-h-[4lh] w-full resize-none rounded p-2 text-sm outline-none placeholder:text-sm"
+              className="max-h-[4lh] w-full resize-none rounded bg-[#232323] p-2 text-sm outline-none placeholder:text-sm"
             />
             {errors.message && (
               <span className=" text-sm text-[#EC5D5E]">
@@ -122,7 +121,7 @@ export default function ContactForm() {
 
           <button
             type="submit"
-            className="mx-auto block w-fit rounded border bg-[#EDEDED] px-10 py-2 text-[#111111] disabled:bg-[#6F6F6F] disabled:cursor-not-allowed cursor-pointer"
+            className="mx-auto block w-fit cursor-pointer rounded border bg-[#EDEDED] px-10 py-2 text-[#111111] disabled:cursor-not-allowed disabled:bg-[#6F6F6F]"
             disabled={!isDirty || !isValid || isSubmitting}
           >
             {isSubmitting ? (

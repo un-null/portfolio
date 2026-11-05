@@ -25,7 +25,7 @@ export const Tab = () => {
           key={item.href}
           className={`pb-1 ${
             item.href === pathname
-              ? "border-[#EEEEEE] text-[#EEEEEE] border-b"
+              ? "border-b border-[#EEEEEE] text-[#EEEEEE]"
               : ""
           }`}
         >

@@ -14,7 +14,7 @@ export default async function Zenn() {
           target="_blank"
           rel="noopener"
         >
-          <Card className="flex h-48 max-w-md flex-col gap-2 border rounded-sm ring-[#EDEDED] hover:text-[#EEEEEE]">
+          <Card className="flex h-48 max-w-md flex-col gap-2 rounded-sm border ring-[#EDEDED] hover:text-[#EEEEEE]">
             <p className="text-center text-5xl">{d.emoji}</p>
             <p className="text-[#EEEEEE]l text-lg font-bold">{d.title}</p>
             <span className="flex-1"></span>

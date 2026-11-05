@@ -4,7 +4,9 @@ import { ArrowLeft } from "@/components/icons/left-arrow";
 import { BlockToJSX } from "@/components/notion/block-to-jsx";
 import { getPageById } from "@/utils/notion";
 
-export default async function BlogId(props: { params: Promise<{ id: string }> }) {
+export default async function BlogId(props: {
+  params: Promise<{ id: string }>;
+}) {
   const params = await props.params;
   const blocks = await getPageById(params.id);
 
