@@ -12,8 +12,8 @@ export default async function NotionBlog() {
       {data.map((d) => (
         <Link href={`/blog/${d?.id}`} key={d?.id}>
           <Card className="flex min-h-[12rem] max-w-md flex-col gap-2 rounded-sm border ring-[#EDEDED] hover:text-[#EEEEEE]">
-            <p className="text-[#EEEEEE] text-lg font-bold">{d?.title}</p>
-            <p className="line-clamp-2 text-clip text-sm font-thin md:line-clamp-2 flex-grow overflow-hidden">
+            <p className="text-lg font-bold text-[#EEEEEE]">{d?.title}</p>
+            <p className="line-clamp-2 flex-grow overflow-hidden text-clip text-sm font-thin md:line-clamp-2">
               {d?.summary}
             </p>
             <p className="text-xs">{d?.created_at.substring(0, 7)}</p>
@@ -23,7 +23,7 @@ export default async function NotionBlog() {
                   key={tag.id}
                   className={`${tagColor(
                     tag.color,
-                  )} text-[#EEEEEE] rounded-sm px-1`}
+                  )} rounded-sm px-1 text-[#EEEEEE]`}
                 >
                   {tag.name}
                 </span>

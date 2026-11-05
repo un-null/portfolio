@@ -1,0 +1,57 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    name: quality
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.13.1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm format:check
+      - run: pnpm lint
+      - run: pnpm typecheck
+
+  build:
+    name: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.13.1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+        env:
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          NOTION_DATABASE_ID_BLOG: ${{ secrets.NOTION_DATABASE_ID_BLOG }}
+          NOTION_DATABASE_ID_FORM: ${{ secrets.NOTION_DATABASE_ID_FORM }}
+          NOTION_DATABASE_ID_PROJECT_HOME: ${{ secrets.NOTION_DATABASE_ID_PROJECT_HOME }}
+          NOTION_DATABASE_ID_PROJECT_WORKS: ${{ secrets.NOTION_DATABASE_ID_PROJECT_WORKS }}
+          NOTION_DATABASE_ID_WORKS: ${{ secrets.NOTION_DATABASE_ID_WORKS }}
