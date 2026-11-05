@@ -4,7 +4,6 @@ import Link from "next/link";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
-import Balancer from "react-wrap-balancer";
 import z from "zod";
 
 import Icon from "./icons/icon";
@@ -55,9 +54,9 @@ export default function ContactForm() {
           <p>
             Your message has been received 🎉
             <br />
-            <Balancer>
+            <span className="block text-balance">
               We&apos;re grateful for your contact and will respond promptly!
-            </Balancer>
+            </span>
           </p>
           <Link href="/" className="flex flex-col hover:text-[#EEEEEE]">
             <div className="mt-10 grid place-items-center">
