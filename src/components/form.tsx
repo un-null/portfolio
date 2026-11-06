@@ -54,7 +54,7 @@ export default function ContactForm() {
           <p>
             Your message has been received 🎉
             <br />
-            <span className="block text-balance">
+            <span className="text-balance block">
               We&apos;re grateful for your contact and will respond promptly!
             </span>
           </p>
