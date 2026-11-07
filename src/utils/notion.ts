@@ -1,11 +1,23 @@
-import { Client } from "@notionhq/client";
-import { BlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
+import { cache } from "react";
+
+import { Client, collectPaginatedAPI, isFullBlock } from "@notionhq/client";
+import type {
+  BlockObjectResponse,
+  RichTextItemResponse,
+} from "@notionhq/client/build/src/api-endpoints";
 
 import { SelectColor } from "@/types/notion";
 
 export const notion = new Client({
   auth: process.env.NOTION_TOKEN,
 });
+
+export type BlockWithChildren = BlockObjectResponse & {
+  children?: BlockWithChildren[];
+};
+
+const plainText = (rich: RichTextItemResponse[] | undefined) =>
+  (rich ?? []).map((text) => text.plain_text).join("");
 
 export const getAllWorks = async () => {
   const res = await notion.databases.query({
@@ -25,8 +37,8 @@ export const getAllWorks = async () => {
 
       const title =
         d.properties["Name"].type === "title"
-          ? d.properties["Name"].title.map((title) => title.plain_text)
-          : [];
+          ? plainText(d.properties["Name"].title)
+          : "";
 
       const date =
         d.properties["Date"].type === "date"
@@ -50,13 +62,13 @@ export const getAllWorks = async () => {
   };
 };
 
-export const getAllBlogs = async () => {
+export const getAllBlogs = cache(async () => {
   const req = await notion.databases.query({
     database_id: process.env.NOTION_DATABASE_ID_BLOG,
     sorts: [
       {
         timestamp: "created_time",
-        direction: "ascending",
+        direction: "descending",
       },
     ],
   });
@@ -68,12 +80,12 @@ export const getAllBlogs = async () => {
 
       const title =
         d.properties["Name"].type === "title"
-          ? d.properties["Name"].title.map((title) => title.plain_text)
-          : [];
+          ? plainText(d.properties["Name"].title)
+          : "";
       const summary =
         d.properties["Summary"].type === "rich_text"
-          ? d.properties["Summary"].rich_text.map((d) => d.plain_text)
-          : [];
+          ? plainText(d.properties["Summary"].rich_text)
+          : "";
       const tags =
         d.properties["Tags"].type === "multi_select"
           ? d.properties["Tags"].multi_select.map((tag) => tag)
@@ -86,7 +98,7 @@ export const getAllBlogs = async () => {
   return {
     data: data ? data : [],
   };
-};
+});
 
 export const getPublishedProject = async () => {
   const home = await notion.databases.query({
@@ -126,8 +138,8 @@ export const getPublishedProject = async () => {
 
       const title =
         d.properties["Name"].type === "title"
-          ? d.properties["Name"].title.map((title) => title.plain_text)
-          : [];
+          ? plainText(d.properties["Name"].title)
+          : "";
 
       const status =
         d.properties["Status"].type === "status"
@@ -154,8 +166,8 @@ export const getPublishedProject = async () => {
 
       const title =
         d.properties["Name"].type === "title"
-          ? d.properties["Name"].title.map((title) => title.plain_text)
-          : [];
+          ? plainText(d.properties["Name"].title)
+          : "";
 
       const status =
         d.properties["Status"].type === "status"
@@ -191,15 +203,30 @@ export const getPublishedProject = async () => {
   };
 };
 
-export const getPageById = async (id: string) => {
-  const results = (
-    await notion.blocks.children.list({
-      block_id: id,
+const fetchBlocks = async (
+  blockId: string,
+  depth: number,
+): Promise<BlockWithChildren[]> => {
+  const blocks = (
+    await collectPaginatedAPI(notion.blocks.children.list, {
+      block_id: blockId,
     })
-  ).results;
+  ).filter(isFullBlock);
 
-  return results.filter((d) => "type" in d) as BlockObjectResponse[];
+  if (depth >= 2) {
+    return blocks;
+  }
+
+  return Promise.all(
+    blocks.map(async (block) =>
+      block.has_children
+        ? { ...block, children: await fetchBlocks(block.id, depth + 1) }
+        : block,
+    ),
+  );
 };
+
+export const getPageById = cache((id: string) => fetchBlocks(id, 0));
 
 export const tagColor = (color: SelectColor) => {
   switch (color) {

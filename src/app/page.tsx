@@ -39,10 +39,10 @@ export default async function Home() {
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        {item?.title.join("")}
+                        {item?.title}
                       </a>
                     ) : (
-                      <p>{item?.title.join("")}</p>
+                      <p>{item?.title}</p>
                     )}
                   </td>
                   <td className="w-0 whitespace-nowrap p-0 text-left align-middle tabular-nums">

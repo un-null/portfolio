@@ -16,10 +16,10 @@ export default async function NotionBlog() {
                 {d?.created_at.substring(0, 10).replace(/-/g, ".")}
               </span>
               <p className="line-clamp-2 text-xs font-bold leading-snug text-zinc-200 sm:text-sm">
-                {d?.title.join("")}
+                {d?.title}
               </p>
               <p className="mt-2 line-clamp-2 overflow-hidden text-xs text-zinc-400">
-                {d?.summary.join("")}
+                {d?.summary}
               </p>
               <ul className="mt-auto flex flex-wrap gap-2 pt-3 text-[10px]">
                 {d?.tags.map((tag) => (

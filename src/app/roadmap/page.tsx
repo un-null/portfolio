@@ -45,7 +45,7 @@ export default async function Roadmap() {
                     className="space-y-3 rounded bg-[#F1F1EF]/40 p-4"
                   >
                     <p className="text-xs"># {item?.label.name}</p>
-                    <p className="text-sm font-bold">{item?.title.join(" ")}</p>
+                    <p className="text-sm font-bold">{item?.title}</p>
                   </Card>
                 ))}
               </div>
@@ -61,7 +61,7 @@ export default async function Roadmap() {
                     className="space-y-3 rounded bg-[#529CCA]/40 p-4"
                   >
                     <p className="text-xs"># {item?.label.name}</p>
-                    <p className="text-sm font-bold">{item?.title.join(" ")}</p>
+                    <p className="text-sm font-bold">{item?.title}</p>
                   </Card>
                 ))}
               </div>
@@ -77,7 +77,7 @@ export default async function Roadmap() {
                     className="space-y-3 rounded bg-[#4DAB9A]/40 p-4"
                   >
                     <p className="text-xs"># {item?.label.name}</p>
-                    <p className="text-sm font-bold">{item?.title.join(" ")}</p>
+                    <p className="text-sm font-bold">{item?.title}</p>
                   </Card>
                 ))}
               </div>
