@@ -54,7 +54,7 @@ export default async function BlogId(props: {
         <span>
           <ArrowLeft />
         </span>
-        戻る
+        Back
       </Link>
       <h1 className="mt-8 text-2xl font-bold">{post.title}</h1>
       <p className="mt-2 font-mono text-[10px] text-zinc-400">
