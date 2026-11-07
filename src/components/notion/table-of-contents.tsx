@@ -20,10 +20,7 @@ export const TableOfContents = ({ headings }: { headings: HeadingBlock[] }) => {
   }
 
   return (
-    <nav
-      aria-label="Table of contents"
-      className="my-6 rounded-lg border border-[#454B4E] p-4 text-sm"
-    >
+    <nav aria-label="Table of contents" className="text-sm">
       <ul className="space-y-1">
         {headings.map((heading) => (
           <li

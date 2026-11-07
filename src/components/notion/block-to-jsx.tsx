@@ -17,6 +17,17 @@ type Group =
 const isListItem = (block: BlockWithChildren) =>
   block.type === "bulleted_list_item" || block.type === "numbered_list_item";
 
+const isHeading = (block: BlockWithChildren): block is HeadingBlock =>
+  block.type === "heading_1" ||
+  block.type === "heading_2" ||
+  block.type === "heading_3";
+
+const collectHeadings = (blocks: BlockWithChildren[]): HeadingBlock[] =>
+  blocks.flatMap((block) => [
+    ...(isHeading(block) ? [block] : []),
+    ...(block.children ? collectHeadings(block.children) : []),
+  ]);
+
 const groupBlocks = (blocks: BlockWithChildren[]): Group[] => {
   const groups: Group[] = [];
 
@@ -42,9 +53,11 @@ const groupBlocks = (blocks: BlockWithChildren[]): Group[] => {
 const ListGroup = ({
   ordered,
   items,
+  headings,
 }: {
   ordered: boolean;
   items: BlockWithChildren[];
+  headings: HeadingBlock[];
 }) => {
   const Tag = ordered ? "ol" : "ul";
   const richTextOf = (block: BlockWithChildren) =>
@@ -65,7 +78,9 @@ const ListGroup = ({
       {items.map((block) => (
         <li key={block.id}>
           <RichText text={richTextOf(block)} />
-          {block.children?.length ? <Blocks blocks={block.children} /> : null}
+          {block.children?.length ? (
+            <Blocks blocks={block.children} headings={headings} />
+          ) : null}
         </li>
       ))}
     </Tag>
@@ -86,18 +101,32 @@ const ToDo = ({ block }: { block: ToDoBlock }) => (
   </div>
 );
 
-const Toggle = ({ block }: { block: ToggleBlock }) => (
-  <details className="my-4">
+const Toggle = ({
+  block,
+  headings,
+}: {
+  block: ToggleBlock;
+  headings: HeadingBlock[];
+}) => (
+  <details className="my-2">
     <summary className="cursor-pointer font-medium">
       <RichText text={block.toggle.rich_text} />
     </summary>
     <div className="mt-2 border-l border-[#454B4E] pl-4">
-      {block.children?.length ? <Blocks blocks={block.children} /> : null}
+      {block.children?.length ? (
+        <Blocks blocks={block.children} headings={headings} />
+      ) : null}
     </div>
   </details>
 );
 
-export const BlockToJSX = ({ block }: { block: BlockWithChildren }) => {
+export const BlockToJSX = ({
+  block,
+  headings,
+}: {
+  block: BlockWithChildren;
+  headings: HeadingBlock[];
+}) => {
   switch (block.type) {
     case "paragraph":
       return <Paragraph block={block} />;
@@ -111,31 +140,39 @@ export const BlockToJSX = ({ block }: { block: BlockWithChildren }) => {
         <ListGroup
           ordered={block.type === "numbered_list_item"}
           items={[block]}
+          headings={headings}
         />
       );
     case "image":
       return <ImageBlock block={block} />;
     case "callout":
-      return <Callout block={block} />;
+      return (
+        <Callout block={block}>
+          {block.children?.length ? (
+            <Blocks blocks={block.children} headings={headings} />
+          ) : null}
+        </Callout>
+      );
     case "divider":
-      return <hr className="my-8 border-[#454B4E]" />;
+      return <hr className="my-6 border-[#454B4E]" />;
     case "to_do":
       return <ToDo block={block} />;
     case "toggle":
-      return <Toggle block={block} />;
+      return <Toggle block={block} headings={headings} />;
     default:
       // table_of_contents は Blocks が headings を集めて描画する
       return null;
   }
 };
 
-export const Blocks = ({ blocks }: { blocks: BlockWithChildren[] }) => {
-  const headings = blocks.filter(
-    (block): block is HeadingBlock =>
-      block.type === "heading_1" ||
-      block.type === "heading_2" ||
-      block.type === "heading_3",
-  );
+export const Blocks = ({
+  blocks,
+  headings,
+}: {
+  blocks: BlockWithChildren[];
+  headings?: HeadingBlock[];
+}) => {
+  const pageHeadings = headings ?? collectHeadings(blocks);
 
   return (
     <>
@@ -145,11 +182,16 @@ export const Blocks = ({ blocks }: { blocks: BlockWithChildren[] }) => {
             key={group.items[0].id}
             ordered={group.ordered}
             items={group.items}
+            headings={pageHeadings}
           />
         ) : group.block.type === "table_of_contents" ? (
-          <TableOfContents key={group.block.id} headings={headings} />
+          <TableOfContents key={group.block.id} headings={pageHeadings} />
         ) : (
-          <BlockToJSX key={group.block.id} block={group.block} />
+          <BlockToJSX
+            key={group.block.id}
+            block={group.block}
+            headings={pageHeadings}
+          />
         ),
       )}
     </>
