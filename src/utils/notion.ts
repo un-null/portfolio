@@ -25,7 +25,7 @@ export const getAllWorks = async () => {
     sorts: [
       {
         timestamp: "created_time",
-        direction: "ascending",
+        direction: "descending",
       },
     ],
   });
@@ -47,18 +47,39 @@ export const getAllWorks = async () => {
 
       const github_url =
         d.properties["Github"].type === "url" ? d.properties["Github"].url : "";
+
+      const domain =
+        d.properties["Domain"].type === "url" ? d.properties["Domain"].url : "";
+
+      const archived =
+        d.properties["Archived"].type === "checkbox"
+          ? d.properties["Archived"].checkbox
+          : false;
+
       const langs =
         d.properties["Languages"].type === "multi_select"
           ? d.properties["Languages"].multi_select
           : [];
-      return { id, public_url, title, date, github_url, langs };
+      return {
+        id,
+        public_url,
+        title,
+        date,
+        github_url,
+        langs,
+        domain,
+        archived,
+      };
     } else {
       return undefined;
     }
   });
 
+  const active = data.filter((item) => !item?.archived);
+  const archived = data.filter((item) => item?.archived);
+
   return {
-    result: data,
+    result: [...active, ...archived],
   };
 };
 
