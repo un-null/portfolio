@@ -40,24 +40,24 @@ export default async function Home() {
             </thead>
             <tbody className="divide-y align-top">
               {result.map((item) => (
-                <tr key={item?.id} className="border-[#3A3A3A] p-2 text-sm">
+                <tr key={item.id} className="border-[#3A3A3A] p-2 text-sm">
                   <td className="hidden w-0 whitespace-nowrap p-0 pr-4 text-left align-middle tabular-nums sm:table-cell">
-                    {item?.date}
+                    {item.date}
                   </td>
                   <td className="whitespace-nowrap p-0 pr-4 text-left align-middle tabular-nums text-[#EEEEEE]">
-                    {item?.domain || item?.public_url ? (
+                    {item.domain || item.public_url ? (
                       <a
-                        href={item?.domain || item?.public_url || ""}
+                        href={item.domain || item.public_url || ""}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="hover:underline"
                       >
-                        {item?.title}
+                        {item.title}
                       </a>
                     ) : (
-                      <p>{item?.title}</p>
+                      <p>{item.title}</p>
                     )}
-                    {item?.archived ? (
+                    {item.archived ? (
                       <span className="ml-2 rounded border border-[#4A2A2A] bg-[#2A1A1A] px-1.5 py-0.5 text-[10px] text-[#E5726B]">
                         archived
                       </span>
@@ -65,7 +65,7 @@ export default async function Home() {
                   </td>
                   <td className="w-0 whitespace-nowrap p-0 text-left align-middle tabular-nums">
                     <ul className="flex space-x-2 text-[#EEEEEE]">
-                      {item?.langs.map((lang) => (
+                      {item.langs.map((lang) => (
                         <li key={lang.name}>
                           <span title={lang.name}>
                             <StackIcon type={lang.name} />
@@ -75,9 +75,7 @@ export default async function Home() {
                     </ul>
                   </td>
                   <td className="w-0 whitespace-nowrap p-4 text-left align-middle tabular-nums">
-                    <ActionIcon
-                      href={item?.github_url ? item.github_url : ""}
-                    />
+                    <ActionIcon href={item.github_url ? item.github_url : ""} />
                   </td>
                 </tr>
               ))}

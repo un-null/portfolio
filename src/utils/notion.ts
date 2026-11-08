@@ -79,8 +79,11 @@ export const getAllWorks = async () => {
     }
   });
 
-  const active = data.filter((item) => !item?.archived);
-  const archived = data.filter((item) => item?.archived);
+  const works = data.filter(
+    (item): item is NonNullable<typeof item> => item !== undefined,
+  );
+  const active = works.filter((item) => !item.archived);
+  const archived = works.filter((item) => item.archived);
 
   return {
     result: [...active, ...archived],
@@ -134,36 +137,38 @@ export const getPublishedProject = async () => {
   cacheLife("hours");
   cacheTag("projects");
 
-  const home = await notion.databases.query({
-    database_id: process.env.NOTION_DATABASE_ID_PROJECT_HOME,
-    sorts: [
-      {
-        timestamp: "created_time",
-        direction: "ascending",
+  const [home, works] = await Promise.all([
+    notion.databases.query({
+      database_id: process.env.NOTION_DATABASE_ID_PROJECT_HOME,
+      sorts: [
+        {
+          timestamp: "created_time",
+          direction: "ascending",
+        },
+      ],
+      filter: {
+        property: "Published",
+        select: {
+          equals: "true",
+        },
       },
-    ],
-    filter: {
-      property: "Published",
-      select: {
-        equals: "true",
+    }),
+    notion.databases.query({
+      database_id: process.env.NOTION_DATABASE_ID_PROJECT_WORKS,
+      sorts: [
+        {
+          timestamp: "created_time",
+          direction: "ascending",
+        },
+      ],
+      filter: {
+        property: "Published",
+        select: {
+          equals: "true",
+        },
       },
-    },
-  });
-  const works = await notion.databases.query({
-    database_id: process.env.NOTION_DATABASE_ID_PROJECT_WORKS,
-    sorts: [
-      {
-        timestamp: "created_time",
-        direction: "ascending",
-      },
-    ],
-    filter: {
-      property: "Published",
-      select: {
-        equals: "true",
-      },
-    },
-  });
+    }),
+  ]);
 
   const filterd_home = home.results.map((d) => {
     if (d.object === "page" && "properties" in d) {
