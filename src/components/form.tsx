@@ -1,55 +1,23 @@
 "use client";
 
+import { useActionState } from "react";
 import Link from "next/link";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { SubmitHandler, useForm } from "react-hook-form";
-import z from "zod";
+import { submitContact, type ContactState } from "@/app/contact/actions";
 
 import Icon from "./icons/icon";
 
-const schema = z.object({
-  name: z.string().min(1, "Please enter your name").trim(),
-  email: z
-    .string()
-    .email("Please enter a valid email address")
-    .min(1, "Please enter your email")
-    .trim(),
-  message: z.string().min(1, "Please enter your message").trim(),
-});
-
-export type Form = z.infer<typeof schema>;
+const initialState: ContactState = { status: "idle" };
 
 export default function ContactForm() {
-  const {
-    register,
-    handleSubmit,
-
-    formState: { errors, isSubmitting, isSubmitSuccessful, isDirty, isValid },
-  } = useForm<Form>({ resolver: zodResolver(schema) });
-
-  const onSubmit: SubmitHandler<Form> = async (data) => {
-    try {
-      schema.parse(data);
-      await fetch("api/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: data.name,
-          email: data.email,
-          message: data.message,
-        }),
-      }).then((res) => console.log(res));
-    } catch {
-      throw new Error("");
-    }
-  };
+  const [state, formAction, isPending] = useActionState(
+    submitContact,
+    initialState,
+  );
 
   return (
     <div className="w-full text-[#EEEEEE]">
-      {isSubmitSuccessful ? (
+      {state.status === "success" ? (
         <div className="text-center">
           <p>
             Your message has been received 🎉
@@ -58,16 +26,24 @@ export default function ContactForm() {
               We&apos;re grateful for your contact and will respond promptly!
             </span>
           </p>
-          <Link href="/" className="flex flex-col hover:text-[#EEEEEE]">
+          <Link
+            href="/"
+            className="group flex flex-col text-[#EEEEEE] transition-colors hover:text-[#7FB89F] focus-visible:text-[#7FB89F]"
+          >
             <div className="mt-10 grid place-items-center">
-              <Icon type="Home" size={40} />
+              <span className="col-start-1 row-start-1 transition-opacity group-hover:opacity-0 group-focus-visible:opacity-0">
+                <Icon type="Home" size={40} />
+              </span>
+              <span className="col-start-1 row-start-1 opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
+                <Icon type="Exit" size={40} />
+              </span>
             </div>
-            <p className="text-xs">Go Home</p>
+            <p className="text-xs">Exit</p>
           </Link>
         </div>
       ) : (
         <form
-          onSubmit={handleSubmit(onSubmit)}
+          action={formAction}
           className="mx-auto mt-10 flex w-full max-w-md flex-col space-y-4"
         >
           <label htmlFor="name">
@@ -75,13 +51,13 @@ export default function ContactForm() {
             <input
               type="text"
               id="name"
+              name="name"
               placeholder="your name"
-              {...register("name")}
               className="mt-1 w-full rounded bg-[#232323] p-2 text-sm accent-[#191919] outline-none placeholder:text-sm"
             />
-            {errors.name && (
+            {state.errors?.name && (
               <span className="text-sm text-[#EC5D5E]">
-                {errors.name.message}
+                {state.errors.name[0]}
               </span>
             )}
           </label>
@@ -91,13 +67,13 @@ export default function ContactForm() {
             <input
               type="email"
               id="email"
+              name="email"
               placeholder="your email"
-              {...register("email")}
               className="mt-1 w-full rounded bg-[#232323] p-2 text-sm accent-[#191919] outline-none placeholder:text-sm"
             />
-            {errors.email && (
+            {state.errors?.email && (
               <span className="text-sm text-[#EC5D5E]">
-                {errors.email.message}
+                {state.errors.email[0]}
               </span>
             )}
           </label>
@@ -106,24 +82,30 @@ export default function ContactForm() {
             <span className="text-sm font-thin">message</span>
             <textarea
               id="message"
+              name="message"
               placeholder="your message"
               rows={4}
-              {...register("message")}
               className="max-h-[4lh] w-full resize-none rounded bg-[#232323] p-2 text-sm outline-none placeholder:text-sm"
             />
-            {errors.message && (
+            {state.errors?.message && (
               <span className=" text-sm text-[#EC5D5E]">
-                {errors.message.message}
+                {state.errors.message[0]}
               </span>
             )}
           </label>
 
+          {state.errors?.form && (
+            <span className="text-sm text-[#EC5D5E]">
+              {state.errors.form[0]}
+            </span>
+          )}
+
           <button
             type="submit"
             className="mx-auto block w-fit cursor-pointer rounded border bg-[#EDEDED] px-10 py-2 text-[#111111] disabled:cursor-not-allowed disabled:bg-[#6F6F6F]"
-            disabled={!isDirty || !isValid || isSubmitting}
+            disabled={isPending}
           >
-            {isSubmitting ? (
+            {isPending ? (
               <div className="h-6 w-6 animate-spin rounded-full border-2 border-t-transparent"></div>
             ) : (
               "Send"
