@@ -37,4 +37,6 @@ next-env.d.ts
 
 # local planning / generated docs
 /plan.md
-/docs/
+/docs/*
+!/docs/architecture.png
+!/docs/home.webp
