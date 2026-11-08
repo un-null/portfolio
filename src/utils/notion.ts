@@ -251,25 +251,25 @@ export const getPageById = cache((id: string) => fetchBlocks(id, 0));
 
 export const tagColor = (color: SelectColor) => {
   switch (color) {
-    case (color = "gray"):
+    case "gray":
       return "bg-[#454B4E]";
-    case (color = "brown"):
+    case "brown":
       return "bg-[#434040]";
-    case (color = "orange"):
+    case "orange":
       return "bg-[#594A3A]";
-    case (color = "yellow"):
+    case "yellow":
       return "bg-[#59563B]";
-    case (color = "green"):
+    case "green":
       return "bg-[#354C4B]";
-    case (color = "blue"):
+    case "blue":
       return "bg-[#364954]";
-    case (color = "purple"):
+    case "purple":
       return "bg-[#443F57]";
-    case (color = "pink"):
+    case "pink":
       return "bg-[#533B4C]";
-    case (color = "red"):
+    case "red":
       return "bg-[#594141]";
-    case (color = "default"):
+    case "default":
       return "bg-[#454B4E]";
   }
 };
