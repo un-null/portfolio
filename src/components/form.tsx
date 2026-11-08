@@ -52,6 +52,7 @@ export default function ContactForm() {
               type="text"
               id="name"
               name="name"
+              autoComplete="name"
               placeholder="your name"
               className="mt-1 w-full rounded bg-[#232323] p-2 text-sm accent-[#191919] outline-none placeholder:text-sm"
             />
@@ -68,6 +69,7 @@ export default function ContactForm() {
               type="email"
               id="email"
               name="email"
+              autoComplete="email"
               placeholder="your email"
               className="mt-1 w-full rounded bg-[#232323] p-2 text-sm accent-[#191919] outline-none placeholder:text-sm"
             />

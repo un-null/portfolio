@@ -27,6 +27,7 @@ export default function InterviewCard() {
         alt=""
         width={160}
         height={90}
+        sizes="(max-width: 640px) 120px, 160px"
         className="h-[67px] w-[120px] shrink-0 rounded-md object-cover sm:h-[90px] sm:w-[160px]"
       />
     </a>
