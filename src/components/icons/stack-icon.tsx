@@ -1,4 +1,3 @@
-"use client";
 type StackIconProps = {
   type: string;
   size?: number;

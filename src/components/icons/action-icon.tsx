@@ -1,5 +1,3 @@
-"use client";
-
 type Icon = {
   size?: number;
   href: string;
