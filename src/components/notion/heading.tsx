@@ -11,13 +11,15 @@ export type HeadingBlock =
   | Heading2BlockObjectResponse
   | Heading3BlockObjectResponse;
 
+export const headingText = (block: HeadingBlock) =>
+  "heading_1" in block
+    ? block.heading_1.rich_text
+    : "heading_2" in block
+    ? block.heading_2.rich_text
+    : block.heading_3.rich_text;
+
 export const Heading = ({ block }: { block: HeadingBlock }) => {
-  const text =
-    "heading_1" in block
-      ? block.heading_1.rich_text
-      : "heading_2" in block
-      ? block.heading_2.rich_text
-      : block.heading_3.rich_text;
+  const text = headingText(block);
 
   if (block.type === "heading_1") {
     return (
