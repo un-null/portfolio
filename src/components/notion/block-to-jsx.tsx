@@ -87,19 +87,28 @@ const ListGroup = ({
   );
 };
 
-const ToDo = ({ block }: { block: ToDoBlock }) => (
-  <div className="my-2 flex items-start gap-2">
-    <input
-      type="checkbox"
-      defaultChecked={block.to_do.checked}
-      disabled
-      className="mt-1.5"
-    />
-    <span className={block.to_do.checked ? "text-[#6B7075] line-through" : ""}>
-      <RichText text={block.to_do.rich_text} />
-    </span>
-  </div>
-);
+const ToDo = ({ block }: { block: ToDoBlock }) => {
+  const text = block.to_do.rich_text
+    .map((richText) => richText.plain_text)
+    .join("");
+
+  return (
+    <div className="my-2 flex items-start gap-2">
+      <input
+        type="checkbox"
+        defaultChecked={block.to_do.checked}
+        disabled
+        aria-label={text || "To-do"}
+        className="mt-1.5"
+      />
+      <span
+        className={block.to_do.checked ? "text-[#8A9096] line-through" : ""}
+      >
+        <RichText text={block.to_do.rich_text} />
+      </span>
+    </div>
+  );
+};
 
 const Toggle = ({
   block,

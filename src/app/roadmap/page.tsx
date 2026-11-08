@@ -42,7 +42,7 @@ export default async function Roadmap() {
                 {result.in_review.map((item) => (
                   <Card
                     key={item?.id}
-                    className="space-y-3 rounded bg-[#F1F1EF]/40 p-4"
+                    className="space-y-3 rounded bg-[#F1F1EF]/30 p-4"
                   >
                     <p className="text-xs"># {item?.label.name}</p>
                     <p className="text-sm font-bold">{item?.title}</p>

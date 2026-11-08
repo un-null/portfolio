@@ -14,6 +14,7 @@ export default function ActionIcon({ size = 20, href }: Icon) {
       href={href}
       target="_blank"
       rel="noopener noreferrer"
+      aria-label="GitHub"
       className="block cursor-pointer rounded-sm p-1 hover:bg-[#222222] hover:text-[#EEEEEE]"
     >
       <svg

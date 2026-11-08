@@ -25,6 +25,7 @@ export default function Header() {
           href="https://twitter.com/nu_____ll"
           target="_blank"
           rel="noopener noreferrer"
+          aria-label="X (Twitter)"
           className="hover:text-[#EEEEEE]"
         >
           <Icon type="X" size={16} />

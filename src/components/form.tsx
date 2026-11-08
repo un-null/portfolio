@@ -54,7 +54,7 @@ export default function ContactForm() {
               name="name"
               autoComplete="name"
               placeholder="your name"
-              className="mt-1 w-full rounded bg-[#232323] p-2 text-sm accent-[#191919] outline-none placeholder:text-sm"
+              className="mt-1 w-full rounded bg-[#232323] p-2 text-sm accent-[#191919] outline-none placeholder:text-sm placeholder:text-[#9AA0A6]"
             />
             {state.errors?.name && (
               <span className="text-sm text-[#EC5D5E]">
@@ -71,7 +71,7 @@ export default function ContactForm() {
               name="email"
               autoComplete="email"
               placeholder="your email"
-              className="mt-1 w-full rounded bg-[#232323] p-2 text-sm accent-[#191919] outline-none placeholder:text-sm"
+              className="mt-1 w-full rounded bg-[#232323] p-2 text-sm accent-[#191919] outline-none placeholder:text-sm placeholder:text-[#9AA0A6]"
             />
             {state.errors?.email && (
               <span className="text-sm text-[#EC5D5E]">
@@ -87,7 +87,7 @@ export default function ContactForm() {
               name="message"
               placeholder="your message"
               rows={4}
-              className="max-h-[4lh] w-full resize-none rounded bg-[#232323] p-2 text-sm outline-none placeholder:text-sm"
+              className="max-h-[4lh] w-full resize-none rounded bg-[#232323] p-2 text-sm outline-none placeholder:text-sm placeholder:text-[#9AA0A6]"
             />
             {state.errors?.message && (
               <span className=" text-sm text-[#EC5D5E]">

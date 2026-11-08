@@ -7,7 +7,7 @@ export default async function Home() {
   const { result } = await getAllWorks();
 
   return (
-    <div>
+    <div className="min-w-0">
       <p className="mt-5 text-sm leading-loose">
         I&apos;m Keita Kawabata. I have about four years of experience, working
         on government and client projects in Kobe and Tokyo, Japan. I studied
