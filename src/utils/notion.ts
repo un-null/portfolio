@@ -1,4 +1,4 @@
-import { cache } from "react";
+import { cacheLife, cacheTag } from "next/cache";
 
 import { Client, collectPaginatedAPI, isFullBlock } from "@notionhq/client";
 import type {
@@ -20,6 +20,10 @@ const plainText = (rich: RichTextItemResponse[] | undefined) =>
   (rich ?? []).map((text) => text.plain_text).join("");
 
 export const getAllWorks = async () => {
+  "use cache";
+  cacheLife("hours");
+  cacheTag("works");
+
   const res = await notion.databases.query({
     database_id: process.env.NOTION_DATABASE_ID_WORKS,
     sorts: [
@@ -83,7 +87,11 @@ export const getAllWorks = async () => {
   };
 };
 
-export const getAllBlogs = cache(async () => {
+export const getAllBlogs = async () => {
+  "use cache";
+  cacheLife("hours");
+  cacheTag("blogs");
+
   const req = await notion.databases.query({
     database_id: process.env.NOTION_DATABASE_ID_BLOG,
     sorts: [
@@ -119,9 +127,13 @@ export const getAllBlogs = cache(async () => {
   return {
     data: data ? data : [],
   };
-});
+};
 
 export const getPublishedProject = async () => {
+  "use cache";
+  cacheLife("hours");
+  cacheTag("projects");
+
   const home = await notion.databases.query({
     database_id: process.env.NOTION_DATABASE_ID_PROJECT_HOME,
     sorts: [
@@ -247,7 +259,13 @@ const fetchBlocks = async (
   );
 };
 
-export const getPageById = cache((id: string) => fetchBlocks(id, 0));
+export const getPageById = async (id: string): Promise<BlockWithChildren[]> => {
+  "use cache";
+  cacheLife("hours");
+  cacheTag(`blog-${id}`);
+
+  return fetchBlocks(id, 0);
+};
 
 export const tagColor = (color: SelectColor) => {
   switch (color) {

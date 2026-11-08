@@ -6,6 +6,8 @@ import Icon from "@/components/icons/icon";
 import { Blocks } from "@/components/notion/block-to-jsx";
 import { getAllBlogs, getPageById } from "@/utils/notion";
 
+export const instant = false;
+
 export async function generateMetadata(props: {
   params: Promise<{ id: string }>;
 }): Promise<Metadata> {

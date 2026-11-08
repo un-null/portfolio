@@ -1,3 +1,5 @@
+import { cacheLife, cacheTag } from "next/cache";
+
 import { z } from "zod";
 
 const zennArticleSchema = z.object({
@@ -15,6 +17,10 @@ const zennResponseSchema = z.object({
 export type Zenn = z.infer<typeof zennArticleSchema>;
 
 export const getZennBlogs = async (): Promise<{ data: Zenn[] }> => {
+  "use cache";
+  cacheLife("hours");
+  cacheTag("zenn");
+
   const res = await fetch(
     "https://zenn.dev/api/articles?username=nu_______ll&order=latest",
   );
