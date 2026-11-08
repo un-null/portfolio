@@ -34,14 +34,15 @@ export default async function BlogId(props: {
   params: Promise<{ id: string }>;
 }) {
   const { id } = await props.params;
-  const { data } = await getAllBlogs();
+  const [blocks, { data }] = await Promise.all([
+    getPageById(id).catch(() => null),
+    getAllBlogs(),
+  ]);
   const post = data.find((d) => d?.id === id);
 
   if (!post) {
     notFound();
   }
-
-  const blocks = await getPageById(id).catch(() => null);
 
   if (!blocks || blocks.length === 0) {
     notFound();
