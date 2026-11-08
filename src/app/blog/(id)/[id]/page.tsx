@@ -2,9 +2,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { ArrowLeft } from "@/components/icons/left-arrow";
+import Icon from "@/components/icons/icon";
 import { Blocks } from "@/components/notion/block-to-jsx";
 import { getAllBlogs, getPageById } from "@/utils/notion";
+
+export const instant = false;
 
 export async function generateMetadata(props: {
   params: Promise<{ id: string }>;
@@ -32,14 +34,15 @@ export default async function BlogId(props: {
   params: Promise<{ id: string }>;
 }) {
   const { id } = await props.params;
-  const { data } = await getAllBlogs();
+  const [blocks, { data }] = await Promise.all([
+    getPageById(id).catch(() => null),
+    getAllBlogs(),
+  ]);
   const post = data.find((d) => d?.id === id);
 
   if (!post) {
     notFound();
   }
-
-  const blocks = await getPageById(id).catch(() => null);
 
   if (!blocks || blocks.length === 0) {
     notFound();
@@ -51,9 +54,7 @@ export default async function BlogId(props: {
         href={"/blog"}
         className="mt-4 flex items-center gap-2 text-sm hover:text-[#EEEEEE]"
       >
-        <span>
-          <ArrowLeft />
-        </span>
+        <Icon type="ArrowLeft" size={14} />
         Back
       </Link>
       <h1 className="mt-8 text-2xl font-bold">{post.title}</h1>

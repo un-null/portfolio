@@ -9,7 +9,7 @@ export default async function Roadmap() {
   return (
     <div className="space-y-10 overflow-x-hidden">
       <section>
-        <Card className="grid gap-4 rounded-sm border text-[#EEEEEE] ring-[#EDEDED]">
+        <Card className="grid gap-4 rounded-sm border p-6 text-[#EEEEEE] ring-[#EDEDED]">
           <h1 className="text-xl font-bold text-[#EEEEEE]">About</h1>
           <p className="text-sm font-thin leading-6">
             Here is my 2025 roadmap. You can review my tasks in review, in

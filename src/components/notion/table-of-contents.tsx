@@ -1,18 +1,5 @@
-import type { BlockWithChildren } from "@/utils/notion";
-
+import { headingText, type HeadingBlock } from "./heading";
 import { RichText } from "./rich-text";
-
-type HeadingBlock = Extract<
-  BlockWithChildren,
-  { type: "heading_1" | "heading_2" | "heading_3" }
->;
-
-const richTextOf = (block: HeadingBlock) =>
-  "heading_1" in block
-    ? block.heading_1.rich_text
-    : "heading_2" in block
-    ? block.heading_2.rich_text
-    : block.heading_3.rich_text;
 
 export const TableOfContents = ({ headings }: { headings: HeadingBlock[] }) => {
   if (headings.length === 0) {
@@ -34,7 +21,7 @@ export const TableOfContents = ({ headings }: { headings: HeadingBlock[] }) => {
             }
           >
             <a href={`#${heading.id}`} className="hover:underline">
-              <RichText text={richTextOf(heading)} />
+              <RichText text={headingText(heading)} />
             </a>
           </li>
         ))}

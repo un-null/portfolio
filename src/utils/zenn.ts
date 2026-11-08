@@ -1,19 +1,42 @@
-type Zenn = {
-  id: number;
-  title: string;
-  emoji: string;
-  published_at: string;
-  path: string;
-};
+import { cacheLife, cacheTag } from "next/cache";
 
-export const getZennBlogs = async () => {
+import { z } from "zod";
+
+const zennArticleSchema = z.object({
+  id: z.number(),
+  title: z.string(),
+  emoji: z.string(),
+  published_at: z.string(),
+  path: z.string(),
+});
+
+const zennResponseSchema = z.object({
+  articles: z.array(zennArticleSchema),
+});
+
+export type Zenn = z.infer<typeof zennArticleSchema>;
+
+export const getZennBlogs = async (): Promise<{ data: Zenn[] }> => {
+  "use cache";
+  cacheLife("hours");
+  cacheTag("zenn");
+
   const res = await fetch(
     "https://zenn.dev/api/articles?username=nu_______ll&order=latest",
   );
 
-  const data = await res.json();
+  if (!res.ok) {
+    console.error(`Failed to fetch Zenn articles: ${res.status}`);
+    return { data: [] };
+  }
 
-  return {
-    data: data.articles as Zenn[],
-  };
+  const json = await res.json().catch(() => null);
+  const parsed = zennResponseSchema.safeParse(json);
+
+  if (!parsed.success) {
+    console.error("Failed to parse Zenn articles", parsed.error);
+    return { data: [] };
+  }
+
+  return { data: parsed.data.articles };
 };

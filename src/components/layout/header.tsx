@@ -27,9 +27,7 @@ export default function Header() {
           rel="noopener noreferrer"
           className="hover:text-[#EEEEEE]"
         >
-          <span>
-            <Icon type="X" size={16} />
-          </span>
+          <Icon type="X" size={16} />
         </a>
       </nav>
     </header>
