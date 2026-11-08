@@ -30,7 +30,8 @@ export const getZennBlogs = async (): Promise<{ data: Zenn[] }> => {
     return { data: [] };
   }
 
-  const parsed = zennResponseSchema.safeParse(await res.json());
+  const json = await res.json().catch(() => null);
+  const parsed = zennResponseSchema.safeParse(json);
 
   if (!parsed.success) {
     console.error("Failed to parse Zenn articles", parsed.error);
