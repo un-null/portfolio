@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { ArrowLeft } from "@/components/icons/left-arrow";
+import Icon from "@/components/icons/icon";
 import { Blocks } from "@/components/notion/block-to-jsx";
 import { getAllBlogs, getPageById } from "@/utils/notion";
 
@@ -51,9 +51,7 @@ export default async function BlogId(props: {
         href={"/blog"}
         className="mt-4 flex items-center gap-2 text-sm hover:text-[#EEEEEE]"
       >
-        <span>
-          <ArrowLeft />
-        </span>
+        <Icon type="ArrowLeft" size={14} />
         Back
       </Link>
       <h1 className="mt-8 text-2xl font-bold">{post.title}</h1>
