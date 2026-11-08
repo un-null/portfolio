@@ -50,19 +50,18 @@ export default function OpengraphImage() {
               color: "#B3B8BD",
             }}
           >
-            portfolio by null
+            portfolio by Keita Kawabata
           </div>
         </div>
 
         <div
           style={{
             display: "flex",
-            justifyContent: "space-between",
+            justifyContent: "flex-end",
             fontSize: 26,
             color: "#8A9096",
           }}
         >
-          <span>go-next / oper</span>
           <span>@nu_____ll</span>
         </div>
       </div>

@@ -38,7 +38,7 @@ export default function TwitterImage() {
             color: "#B3B8BD",
           }}
         >
-          portfolio by null
+          portfolio by Keita Kawabata
         </div>
       </div>
     ),

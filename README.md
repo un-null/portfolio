@@ -1,36 +1,32 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# null — portfolio
 
-## Getting Started
+My portfolio site. Next.js 16 (App Router, Cache Components), React 19, and Notion as the CMS.
 
-First, run the development server:
+Live: [new-portfolio-two-puce.vercel.app](https://new-portfolio-two-puce.vercel.app)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+[<img src="docs/home.webp" alt="Home page: intro, interview card and the works table" width="820">](https://new-portfolio-two-puce.vercel.app)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## What's inside
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Works** — a table read from a Notion database, with archived projects kept apart
+- **Blog** — posts written in Notion, rendered from the block API with a table of contents
+- **Zenn** — the latest articles from the Zenn API, next to the blog
+- **Contact** — a form that writes into a Notion database through a Server Action
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Stack
 
-## Learn More
+Next.js 16.4 · React 19 · TypeScript · Tailwind CSS 4 · Notion API · Zenn API · Zod · pnpm · Vercel
 
-To learn more about Next.js, take a look at the following resources:
+## Architecture
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+<img src="docs/architecture.png" alt="Architecture: Vercel running Next.js and the image proxy, reading and writing Notion and reading Zenn" width="1000">
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Pages read works, posts and project data from Notion, and article metadata from Zenn. The contact form writes back through a Server Action. Notion returns signed image URLs that expire, so a route handler fetches the current URL and streams the bytes.
 
-## Deploy on Vercel
+## Design notes
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**Notion &gt; MDX.** I already write in Notion, so using the API keeps one source of truth; the cost is a custom renderer for 11 block types. An MDX setup still lives on the archive branch.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+`"use cache"` **&gt; manual revalidation.** Content changes when I edit Notion, not on a timer. An hour of staleness is fine for a portfolio, so five data functions opt in with `cacheLife("hours")` and a tag.
+
+CI runs `format:check`, `lint`, `typecheck` and `build` on every pull request; Vercel deploys `main`.

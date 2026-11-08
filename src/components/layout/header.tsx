@@ -15,9 +15,6 @@ export default function Header() {
         <Link href="/blog" className="hover:text-[#EEEEEE]">
           Blog
         </Link>
-        <Link href="/roadmap" className="hover:text-[#EEEEEE]">
-          Roadmap
-        </Link>
         <Link href="/contact" className="hover:text-[#EEEEEE]">
           Contact
         </Link>
