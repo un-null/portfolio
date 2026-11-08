@@ -19,12 +19,14 @@ export async function generateMetadata(props: {
     return {};
   }
 
+  const description = post.summary || "Notes on software engineering by null.";
+
   return {
     title: post.title,
-    description: post.summary || undefined,
+    description,
     openGraph: {
       title: post.title,
-      description: post.summary,
+      description,
       type: "article",
     },
   };

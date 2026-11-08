@@ -16,9 +16,26 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
 });
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+
 export const metadata: Metadata = {
-  title: "null's portfolio",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "null's portfolio",
+    template: "%s | null",
+  },
   description: "portfolio by null",
+  openGraph: {
+    type: "website",
+    siteName: "null",
+    url: "/",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary",
+    site: "@nu_____ll",
+    creator: "@nu_____ll",
+  },
 };
 
 export default function RootLayout({
