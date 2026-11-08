@@ -14,7 +14,7 @@ export const ImageBlock = ({ block }: { block: ImageBlockObjectResponse }) => {
         className="w-full rounded-lg border border-[#454B4E]"
       />
       {caption ? (
-        <figcaption className="mt-2 text-center text-xs text-[#6B7075]">
+        <figcaption className="mt-2 text-center text-xs text-[#8A9096]">
           {caption}
         </figcaption>
       ) : null}

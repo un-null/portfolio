@@ -17,7 +17,7 @@ export default function InterviewCard() {
       className="mt-4 flex items-center gap-4 rounded-lg border border-[#454B4E] p-4 transition-colors hover:bg-[#222222]"
     >
       <div className="min-w-0 flex-1">
-        <p className="text-xs text-[#6B7075]">{interview.source}</p>
+        <p className="text-xs text-[#8A9096]">{interview.source}</p>
         <p className="mt-1 text-sm leading-snug text-[#EEEEEE]">
           {interview.title}
         </p>
